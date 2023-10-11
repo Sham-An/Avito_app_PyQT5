@@ -14,7 +14,7 @@ class AvitoScraper:
 
         url_api_10 = 'https://m.avito.ru/api/10/items'
         url_api_web1 = 'https://www.avito.ru/web/1/main/items'
-        self.url = url_api_10
+        self.url = url_api_web1
 
 
         self.headers = {
