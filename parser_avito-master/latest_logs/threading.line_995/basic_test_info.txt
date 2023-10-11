@@ -1,0 +1,22 @@
+threading.py:995:SB
+--------------------------------------------------------------------
+Last Page: https://www.avito.ru/moskva/predlozheniya_uslug/transport_perevozki/arenda_spetstekhniki-ASgBAgICAkSYC8SfAZoL3J8B?bt=1&p=4&q=%D1%83%D1%81%D0%BB%D1%83%D0%B3%D0%B8
+ Duration: 57.70s
+  Browser: Chrome 117.0.5938.149 / headless
+   Driver: chromedriver 117.0.5938.149
+Timestamp: 1696777250  (Unix Timestamp)
+     Date: Sunday, 8 October 2023
+     Time: 6:00:50 PM  (RTZ 2 (зима), UTC+03:00)
+--------------------------------------------------------------------
+Traceback:
+  File "C:\Programs\Python\Python311\Lib\tkinter\__init__.py", line 1948, in __call__
+    return self.func(*args)
+           ^^^^^^^^^^^^^^^^
+  File "D:\PycharmProjects\Avito_app_PyQT5\venv\Lib\site-packages\customtkinter\windows\widgets\core_widget_classes\ctk_base_class.py", line 188, in _update_dimensions_event
+    self._draw(no_color_updates=True)  # faster drawing without color changes
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PycharmProjects\Avito_app_PyQT5\venv\Lib\site-packages\customtkinter\windows\widgets\ctk_button.py", line 194, in _draw
+    self._canvas.delete("background_parts")
+  File "C:\Programs\Python\Python311\Lib\tkinter\__init__.py", line 2879, in delete
+    self.tk.call((self._w, 'delete') + args)
+Exception: invalid command name ".!ctkbutton5.!ctkcanvas"
