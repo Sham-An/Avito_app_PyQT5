@@ -3,7 +3,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
 from PyQt5.QtCore import Qt
 from PyQt5.QtCore import QUrl
-from view_task_form_QT5 import Ui_MainWindow
+from view_task_form_QT5_2 import Ui_MainWindow
 import psycopg2
 from config_PySide import params
 from urllib.parse import urlparse, parse_qs

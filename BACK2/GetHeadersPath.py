@@ -15,8 +15,8 @@ def create_db_sql():
         password="postgres",
         # password=input("Пароль"),
         #host="192.168.100.9",
-        #host="10.10.10.18",
-        host="localhost",
+        host="10.10.16.2",
+        #host="localhost",
         port="5432"
     )
 
@@ -220,7 +220,7 @@ def parse_xml(resp_text):
 #         self.task = None
 
 
-def main():
+def start_main():
     #con = create_db_sql()
     #print(con)
 
@@ -283,7 +283,7 @@ class test():
 
 
 if __name__ == '__main__':
-    main()
+    start_main()
 
 ################################################################################################
 # ad_id = str(i['value']['id'])

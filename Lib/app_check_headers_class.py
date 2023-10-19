@@ -16,8 +16,8 @@ from lxml import html
 import logging
 import datetime
 import json
-from django.core.management.base import BaseCommand
-from django.core.management.base import CommandError
+#from django.core.management.base import BaseCommand
+#from django.core.management.base import CommandError
 
 # from aparser.models import Product
 # from aparser.models import Product
@@ -50,48 +50,6 @@ logging.getLogger().setLevel(logging.INFO)
 logger = logging.getLogger(__name__)  # .setLevel(logging.INFO)
 
 
-def set_region_SQL(reg_list, cur):
-    id = int(reg_list['id'])
-    name = reg_list['name']
-    url_path = reg_list['url_path']
-    print(f'Работаем над заданием Region')
-    try:
-        cur = con.cursor()
-        cur.execute("SELECT id, name,parent_Id from AVITO_city")
-
-        rows = cur.fetchall()
-        for row in rows:
-            print("id =", row[0], " NAME =", row[1], "parent_Id =", row[2])
-            # print("NAME =", row[1])
-
-        print("Operation done successfully")
-        con.close()
-
-        # p = Region.objects.get(region_id=id)
-        # # p = Region.objects.filter(region_id=id).first()
-        # print(f'##&& {p.id} {p.name} ')  # task = {self.task}')
-        # p.id = id
-        # p.region_id = id
-        # p.name = name
-        # p.url_path = url_path
-        # p.save()
-    except Region.DoesNotExist:
-        p = Region(
-            id=id,
-            region_id=id,
-            name=name,
-            url_path="",
-            url_name="",
-            index_post=0,
-        ).save()
-
-
-def open_region_js():
-    with open("json/avito_region.json", encoding='utf-8') as file:
-        data = json.load(file)
-    # print(data)
-    return data
-
 
 def region_json_to_aparser():
     con = psycopg2.connect(
@@ -100,7 +58,7 @@ def region_json_to_aparser():
         password="postgres",
         # password=input("Пароль"),
         # host="192.168.100.9",
-        host="10.10.10.18",
+        host="10.10.16.2",
         port="5432"
     )
     cur = con.cursor()
@@ -299,13 +257,8 @@ def main():
 #     pass
 
 
-class Command(BaseCommand):
-    # help = 'The Zen of Python'
-    #
-    # def handle(self, *args, **options):
-    #     import this
+#class Command(BaseCommand):
     help = 'Парсинг Avito'
-
     def handle(self, *args, **options):
         # main()
         # p = MyCustomAuth()
@@ -318,7 +271,6 @@ class Command(BaseCommand):
         # s.open_json_region()
         # s.Open_json_region(self)
         region_list_from_db()
-
 
 if __name__ == '__main__':
     main()

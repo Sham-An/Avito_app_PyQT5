@@ -107,6 +107,10 @@ cicle_stop = True       # Переменная для остановки цик�
 cikle = 0               # Переменная для перебора страниц с объявлениями
 items = []              # Список, куда складываем объявления
 #params['key'] = key
+
+#res_head = s.get('https://www.avito.ru/rostovskaya_oblast') #/mototsikly_i_mototehnika') #/mopedy_i_skutery-ASgBAgICAUQ82gE?cd=1&f=ASgBAgECAUQ82gEBRcaaDBd7ImZyb20iOjIwMDAsInRvIjo2MDAwfQ&q=%D1%81%D0%BA%D1%83%D1%82%D0%B5%D1%80')
+#print('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
+#print(res_head.text)
 while cicle_stop:
     cikle += 1          # Так как страницы начинаются с 1, то сразу же итерируем
     params['page'] = cikle
@@ -143,7 +147,7 @@ while cicle_stop:
         for item in res['result']['items']:
             if item['type'] == 'item':
                 items.append(item)
-                print('items.append(item)')
+                #print(f'items.append(item) {item}')
         if items_page < limit_page:
             cicle_stop = False
 ####################################################################

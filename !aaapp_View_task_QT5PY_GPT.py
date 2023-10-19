@@ -11,6 +11,7 @@ from view_task_form_QT5_WIN import Ui_TaskEDIT  # Ui_MainWindow  # измене�
 import psycopg2
 from config_PySide import params
 from urllib.parse import urlparse, parse_qs
+from Lib.GetHeadersPath import start_main
 
 
 class Parts_union():
@@ -79,6 +80,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_TaskEDIT):  # Ui_MainWindow):
             else:
                 url_str = str(url)
             parsed_url = urlparse(url_str)
+            url_parse = 'android-app://com.avito.android/ru.avito/1/items?categoryId=14&locationId=651110&priceMax=7000&priceMin=2000&query=%D1%81%D0%BA%D1%83%D1%82%D0%B5%D1%80'
+            parsed_url_head = urlparse(url_parse)
+
+            print(parsed_url_head )
+            print(f'parsed_url_head.query = {parsed_url_head.query}')
+            query_dict_head = parse_qs(parsed_url_head.query)
+            print(f'query_dict_head = {query_dict_head} \n {query_dict_head["locationId"][0]}')
 
             self.lineEdit.setText(url)
             self.Path_scheme.setText(parsed_url.scheme)
@@ -113,9 +121,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_TaskEDIT):  # Ui_MainWindow):
             # self.Path_cat1.setText(split_path[2])
             # self.Path_cat2.setText(split_path[3])
             self.list_Query.clear()
-            print(parsed_url.query)
+            print(parsed_url)
             query_dict = parse_qs(parsed_url.query)
+            print(f'parsed_url.query = {parsed_url.query}')
             for param in query_dict:
+                print(param)
                 self.list_Query.addItem("{}: {}".format(param, query_dict[param][0]))
             self.Task_view_text.setText(url)  # str(current.row()))#(parsed_url.fragment)
 
@@ -127,6 +137,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_TaskEDIT):  # Ui_MainWindow):
 
 
 if __name__ == "__main__":
+    #start_main()
     app = QtWidgets.QApplication(sys.argv)
     window = MainWindow()
     window.show()
