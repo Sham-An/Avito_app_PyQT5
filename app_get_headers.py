@@ -33,13 +33,17 @@ def get_attr_dict():
                    'search_parametrs_web',
                    'slug_category',
                    'slug_city',
-                   'slug_reg']
+                   'slug_reg'
+                   'priceMax',
+                   'priceMin',
+                   ]
     # listKeys = ['a', 'b', 'c']
     # listValues = ['apple', 'banana', 'cherry']
     # myDict = {listKeys[i]: listValues[i] for i in range(0, len(listKeys), 1)}
     listValues = None
     myDict = {name_column[i]: listValues for i in range(0, len(name_column), 1)}
-    print(myDict)
+    #print(myDict)
+    return myDict
 
 
 def Parse_slug(url_parse):
@@ -70,7 +74,8 @@ def Parse_slug(url_parse):
     print("Query:", query)
     print("Parsed Query:", parsed_query)
     print("Fragment:", fragment)
-    get_attr_dict()
+    dict_attr = get_attr_dict()
+    print(dict_attr)
 
 
 class AvitoScraperHead:
