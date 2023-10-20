@@ -81,6 +81,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_TaskEDIT):  # Ui_MainWindow):
         # Получаем данные и имена столбцов и заполняем модель таблицы
         rows = self.cursor.fetchall()
         column_names = [desc[0] for desc in self.cursor.description]
+        print('column_names type', type(column_names))
         self.model.clear()
         self.model.setColumnCount(len(column_names))
         self.model.setHorizontalHeaderLabels(column_names)
@@ -95,7 +96,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_TaskEDIT):  # Ui_MainWindow):
         self.View_Task.setColumnWidth(2, 400)
         # self.View_Task.setColumnWidth(3, 0)
         self.View_Task.setColumnHidden(3, True)
-        self.View_Task.setColumnHidden(4, True)
+        #self.View_Task.setColumnHidden(4, True)
         # self.View_Task.setColumnWidth(4, 0)
         # self.View_Task.setColumnWidth(5, 0)
 

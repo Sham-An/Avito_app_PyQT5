@@ -1,21 +1,46 @@
-#import psycopg2
-#import asyncio
-#import threading
-#import logging
-#import datetime
-#import json
+# import psycopg2
+# import asyncio
+# import threading
+# import logging
+# import datetime
+# import json
 import httpx
 import ssl
 from lxml import html
 from urllib.parse import urlparse, parse_qs
 
-#ssl_context = ssl.SSLContext(protocol=ssl.PROTOCOL_TLS_CLIENT)  # +PROTOCOL_TLS_CLIENT) #PROTOCOL_TLS)#
+# ssl_context = ssl.SSLContext(protocol=ssl.PROTOCOL_TLS_CLIENT)  # +PROTOCOL_TLS_CLIENT) #PROTOCOL_TLS)#
 ssl_context = httpx.create_ssl_context()
 # ssl.PROTOCOL_TLS - Selects the highest protocol version that both the client and server support.
 # Despite the name, this option can select both "SSL" and "TLS" protocols.
 
 # set protocol to use
 ssl_context.set_alpn_protocols(["h2"])
+
+
+def get_attr_dict():
+    name_column = ['id',
+                   'title',
+                   'url',
+                   'status',
+                   'category_kod',
+                   'city_kod',
+                   'reg_kod',
+                   'search_filter',
+                   'search_key',
+                   'search_memo',
+                   'search_parametrs_api',
+                   'search_parametrs_web',
+                   'slug_category',
+                   'slug_city',
+                   'slug_reg']
+    # listKeys = ['a', 'b', 'c']
+    # listValues = ['apple', 'banana', 'cherry']
+    # myDict = {listKeys[i]: listValues[i] for i in range(0, len(listKeys), 1)}
+    listValues = None
+    myDict = {name_column[i]: listValues for i in range(0, len(name_column), 1)}
+    print(myDict)
+
 
 def Parse_slug(url_parse):
     # Разбиваем адрес на составляющие
@@ -45,6 +70,7 @@ def Parse_slug(url_parse):
     print("Query:", query)
     print("Parsed Query:", parsed_query)
     print("Fragment:", fragment)
+    get_attr_dict()
 
 
 class AvitoScraperHead:
@@ -144,7 +170,7 @@ class AvitoScraperHead:
         #    print("tree.xpath(path_item) №№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№")
         print('tree.xpath(path_url_canonical) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
         url_canonical = tree.xpath(path_url_canonical)
-#        print(tree.xpath(path_url_canonical)[0])
+        #        print(tree.xpath(path_url_canonical)[0])
         print(url_canonical[0])
         url_parse = str(url_canonical[0])
         Parse_slug(url_parse)
@@ -155,33 +181,30 @@ class AvitoScraperHead:
         url_parse = str(url_alternate1[0])
         Parse_slug(url_parse)
 
-
         print('tree.xpath(path_url_alternate2) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
         url_alternate2 = tree.xpath(path_url_alternate2)
         print(url_alternate2[0])
-#        print(tree.xpath(path_url_alternate2))
+        #        print(tree.xpath(path_url_alternate2))
         url_parse = str(url_alternate2[0])
         Parse_slug(url_parse)
 
+    #        print('tree.xpath(path_url_alternate3) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+    #        url_alternate3 = tree.xpath(path_url_alternate3)[0]
+    #        print(url_alternate3)
 
-#        print('tree.xpath(path_url_alternate3) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-#        url_alternate3 = tree.xpath(path_url_alternate3)[0]
-#        print(url_alternate3)
-
-
-        # for item in tree.xpath(path_item):  # .getall():
-        #     item_id = item.xpath(path_id)
-        #     print(f'ITEM_ID {item.xpath(path_id)[0]} type{type(item_id)} {item.xpath(path_id)[0]}')
-        #     name = item.xpath(path_name)[0]
-        #     price = item.xpath(path_price)
-        #     location = item.xpath(path_location)
-        #     location_free = item.xpath(path_location_free)
-        #
-        #     print(location_free)
-        #     print(f'!!!!!!!!!!!!NAME {name} @@@@ ЦЕНА {price} Location {location}')
-        #     index += 1
-        #     title = item.xpath(path_title)[0]
-        #     print(f' {index} title = {title}')
+    # for item in tree.xpath(path_item):  # .getall():
+    #     item_id = item.xpath(path_id)
+    #     print(f'ITEM_ID {item.xpath(path_id)[0]} type{type(item_id)} {item.xpath(path_id)[0]}')
+    #     name = item.xpath(path_name)[0]
+    #     price = item.xpath(path_price)
+    #     location = item.xpath(path_location)
+    #     location_free = item.xpath(path_location_free)
+    #
+    #     print(location_free)
+    #     print(f'!!!!!!!!!!!!NAME {name} @@@@ ЦЕНА {price} Location {location}')
+    #     index += 1
+    #     title = item.xpath(path_title)[0]
+    #     print(f' {index} title = {title}')
 
     ####################################################################################
     def get_url(self, url):
@@ -189,10 +212,9 @@ class AvitoScraperHead:
         self.url_0 = url
         r = httpx.get(self.url_0, verify=self.ssl_context)
         # response = httpx.get(url, verify=ssl_context)
-        #print(r.text)
+        # print(r.text)
         self.parse_xml(r.text)
-        #parse_xml_1(r.text)
-
+        # parse_xml_1(r.text)
 
 
 # class test():
@@ -218,7 +240,7 @@ if __name__ == '__main__':
     head_list = AvitoScraperHead()
     url_get = "https://www.avito.ru/rostovskaya_oblast/bytovaya_elektronika?cd=1&q=e-mu+1616"
     head_list.get_url(url_get)  # parse_xml()
-    #start_main()
+    # start_main()
 ################################################################################################
 '''
 def start_main():
@@ -395,7 +417,6 @@ def parse_xml_1(resp_text):
 
 
 '''
-
 
 ################################################################################################
 # ad_id = str(i['value']['id'])
