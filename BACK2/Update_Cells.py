@@ -30,6 +30,7 @@ class TableModel(QAbstractTableModel):
                 return data
 
     def setData(self, index, value, role):  # !!!
+        print(role)
         if role == Qt.EditRole:
             self.tasks[index.row()][index.column()] = [value, True]
             return True

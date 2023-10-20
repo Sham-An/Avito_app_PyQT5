@@ -1,9 +1,12 @@
 import os
 import pathlib
 import sys
+#from PyQt5 import QtCore, QtGui, QtWidgets
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
-from PyQt5.QtCore import QUrl
+#from PyQt5.QtCore import QUrl
+from PyQt5.QtCore import *
 from urllib.parse import urlparse, parse_qs
 # from view_task_form_QT5_GPT import Ui_MainWindow  # изменено
 # from view_task_form_QT5_GPT_tmp import Ui_MainWindow  # изменено
@@ -12,6 +15,7 @@ import psycopg2
 from config_PySide import params
 from urllib.parse import urlparse, parse_qs
 from Lib.GetHeadersPath import start_main
+import app_get_headers as head_get
 
 
 class Parts_union():
@@ -43,7 +47,33 @@ class MainWindow(QtWidgets.QMainWindow, Ui_TaskEDIT):  # Ui_MainWindow):
         selection_model.currentChanged.connect(self.on_selection_change)
         self.get_task()
 
+    def check_task(self):
+        # Выполняем запрос к базе данных
+        query_all_task = "SELECT * FROM aparser_task"
+        self.cursor.execute(query_all_task)
+        # Получаем данные и имена столбцов и заполняем модель таблицы
+        rows = self.cursor.fetchall()
+        head_list = head_get.AvitoScraperHead()
+        for row in rows:
+            print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! check', row[2])
+            url2 = str(row[2])
+            head_list.get_url(url2)
+
+        #     data = [str(col) for col in row]
+        #     self.model.appendRow([QStandardItem(d) for d in data])
+        # self.View_Task.resizeColumnsToContents()
+        # self.View_Task.setColumnWidth(0, 3)
+        # self.View_Task.setColumnWidth(1, 50)
+        # self.View_Task.setColumnWidth(2, 400)
+        # self.View_Task.setColumnWidth(3, 0)
+        # self.View_Task.setColumnHidden(3, True)
+        # self.View_Task.setColumnHidden(4, True)
+        # self.View_Task.setColumnWidth(4, 0)
+        # self.View_Task.setColumnWidth(5, 0)
+
     def get_task(self):
+
+        self.check_task()
         # Выполняем запрос к базе данных
         query_all_task = "SELECT * FROM aparser_task"
         self.cursor.execute(query_all_task)
@@ -54,7 +84,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_TaskEDIT):  # Ui_MainWindow):
         self.model.clear()
         self.model.setColumnCount(len(column_names))
         self.model.setHorizontalHeaderLabels(column_names)
+        #print(row)
         for row in rows:
+            #print(row[2])
             data = [str(col) for col in row]
             self.model.appendRow([QStandardItem(d) for d in data])
         self.View_Task.resizeColumnsToContents()
@@ -82,6 +114,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_TaskEDIT):  # Ui_MainWindow):
             parsed_url = urlparse(url_str)
             url_parse = 'android-app://com.avito.android/ru.avito/1/items?categoryId=14&locationId=651110&priceMax=7000&priceMin=2000&query=%D1%81%D0%BA%D1%83%D1%82%D0%B5%D1%80'
             parsed_url_head = urlparse(url_parse)
+            print('current.row()' , current.row(), current.column())
 
             print(parsed_url_head )
             print(f'parsed_url_head.query = {parsed_url_head.query}')
@@ -128,6 +161,18 @@ class MainWindow(QtWidgets.QMainWindow, Ui_TaskEDIT):  # Ui_MainWindow):
                 print(param)
                 self.list_Query.addItem("{}: {}".format(param, query_dict[param][0]))
             self.Task_view_text.setText(url)  # str(current.row()))#(parsed_url.fragment)
+            #View_Task
+            column_index = 7#current.column()
+        #self.View_Task.item(current.row(), column_index)
+        #self.setData("Новые данные")
+
+        #def setData(self, index, tasks, role):  # <--- # +++
+        #     if role == Qt.EditRole:
+        #         row = index.row()
+        #         # column = index.column()
+        #         self.tasks[row] = tasks[row]
+        #         return True
+        #     return False
 
     def closeEvent(self, event):
         # Закрываем соединение с базой данных

@@ -46,7 +46,7 @@ class TableModel(QAbstractTableModel):
         if role == Qt.EditRole:
             row = index.row()
             # column = index.column()
-            self.tasks[row] = tasks[row]
+            self.tasks[row] = 'kghkg'#tasks[row]
             return True
         return False
 
